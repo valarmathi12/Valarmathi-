@@ -283,25 +283,18 @@ async function handleFeedbackSubmit(e) {
 }
 
 function updateComplaintsList() {
-    const ul = document.getElementById('complaints-ul');
-    ul.innerHTML = '';
-    const userEmail = localStorage.getItem("userEmail");
-    const filteredComplaints = complaints.filter(complaint =>
-        complaint.userEmail === userEmail
-    );
-    filteredComplaints.forEach(complaint => {
-        const li = document.createElement('li');
-        li.textContent = `${complaint.title} - ${complaint.status || "pending"}`;
-        ul.appendChild(li);
-    });
-    complaintsList.classList.toggle('hidden', filteredComplaints.length === 0);
+    // Hide the Submitted Complaints section - keeping only Your Complaints section
+    const complaintsListSection = document.getElementById('complaints-list');
+    if (complaintsListSection) {
+        complaintsListSection.classList.add('hidden');
+    }
 }
 
 function updateFeedbackList() {
     const ul = document.getElementById('feedback-ul');
     const userEmail = localStorage.getItem("userEmail");
     const filteredFeedbacks = feedbacks.filter(feedback =>
-        feedback.userEmail === userEmail
+        feedback.userEmail && feedback.userEmail === userEmail
     );
     ul.innerHTML = '';
     filteredFeedbacks.forEach(feedback => {
@@ -316,14 +309,18 @@ function updateStatusList() {
     statusUl.innerHTML = '';
     const userEmail = localStorage.getItem("userEmail");
     const filteredComplaints = complaints.filter(complaint =>
-        complaint.userEmail === userEmail
+        complaint.userEmail && complaint.userEmail === userEmail
     );
     filteredComplaints.forEach(complaint => {
         const li = document.createElement('li');
         const status = complaint.status || "pending";
-        const badgeClass = status === 'pending' ? 'badge-pending' : 'badge-resolved';
-        const statusText = status.charAt(0).toUpperCase() + status.slice(1);
-        li.innerHTML = `<span>${complaint.title}</span><span class="status-badge ${badgeClass}">${statusText}</span>`;
+        let badgeStyle;
+        if (status === "resolved") {
+            badgeStyle = 'background-color: #d4edda; color: #155724; border-radius: 15px; padding: 4px 10px; font-size: 12px;';
+        } else {
+            badgeStyle = 'background-color: #fff3cd; color: #856404; border-radius: 15px; padding: 4px 10px; font-size: 12px;';
+        }
+        li.innerHTML = `<div style="display: flex; justify-content: space-between; align-items: center; gap: 15px;"><span>${complaint.title}</span><span style="${badgeStyle}">${status}</span></div>`;
         statusUl.appendChild(li);
     });
     noComplaintsMsg.classList.toggle('hidden', filteredComplaints.length > 0);
