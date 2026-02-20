@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Section</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .feedback-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .rating-section {
+            margin: 20px 0;
+        }
+
+        .rating-stars, .rating-emojis {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .star, .emoji {
+            font-size: 30px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .star:hover, .emoji:hover {
+            transform: scale(1.2);
+        }
+
+        .star.selected {
+            color: #ffd700;
+        }
+
+        .emoji.selected {
+            background-color: #e3f2fd;
+            border-radius: 50%;
+            padding: 5px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        .success-message {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="feedback-container">
+        <h2>Share Your Feedback</h2>
+        <form id="feedback-form">
+            <div class="input-group">
+                <label for="feedback-title">Feedback Title</label>
+                <input type="text" id="feedback-title" required>
+            </div>
+
+            <div class="input-group">
+                <label for="feedback-description">Feedback Description</label>
+                <textarea id="feedback-description"></textarea>
+            </div>
+
+            <div class="input-group">
+                <label>Rating</label>
+                <div class="rating-section">
+                    <div class="rating-stars" id="rating-stars">
+                        <span class="star" data-rating="1">☆</span>
+                        <span class="star" data-rating="2">☆</span>
+                        <span class="star" data-rating="3">☆</span>
+                        <span class="star" data-rating="4">☆</span>
+                        <span class="star" data-rating="5">☆</span>
+                    </div>
+                    <div class="rating-emojis" id="rating-emojis">
+                        <span class="emoji" data-rating="1">😡</span>
+                        <span class="emoji" data-rating="2">😞</span>
+                        <span class="emoji" data-rating="3">😐</span>
+                        <span class="emoji" data-rating="4">😊</span>
+                        <span class="emoji" data-rating="5">😍</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="anonymous-feedback">
+                <label for="anonymous-feedback">Submit anonymously</label>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Feedback</button>
+        </form>
+
+        <div id="success-message" class="success-message">
+            Thank you for your feedback! Your submission has been recorded.
+        </div>
+    </div>
+
+    <script>
+        // DOM elements
+        const feedbackForm = document.getElementById('feedback-form');
+        const ratingStars = document.getElementById('rating-stars');
+        const ratingEmojis = document.getElementById('rating-emojis');
+        const successMessage = document.getElementById('success-message');
+
+        // Event listeners
+        ratingStars.addEventListener('click', handleStarClick);
+        ratingEmojis.addEventListener('click', handleEmojiClick);
+        feedbackForm.addEventListener('submit', handleFeedbackSubmit);
+
+        // Functions
+        function handleStarClick(e) {
+            if (e.target.classList.contains('star')) {
+                const rating = parseInt(e.target.dataset.rating);
+                
+                // Clear emoji selection
+                document.querySelectorAll('.emoji').forEach(emoji => emoji.classList.remove('selected'));
+                
+                // Remove selected class from all stars
+                document.querySelectorAll('.star').forEach(star => star.classList.remove('selected'));
+                
+                // Add selected class to clicked star and all previous stars
+                document.querySelectorAll('.star').forEach(star => {
+                    if (parseInt(star.dataset.rating) <= rating) {
+                        star.classList.add('selected');
+                    }
+                });
+            }
+        }
+
+        function handleEmojiClick(e) {
+            if (e.target.classList.contains('emoji')) {
+                // Clear star selection
+                document.querySelectorAll('.star').forEach(star => star.classList.remove('selected'));
+                
+                // Remove selected class from all emojis
+                document.querySelectorAll('.emoji').forEach(emoji => emoji.classList.remove('selected'));
+                
+                // Add selected class to clicked emoji
+                e.target.classList.add('selected');
+            }
+        }
+
+        function clearRatingSelection() {
+            document.querySelectorAll('.star').forEach(star => star.classList.remove('selected'));
+            document.querySelectorAll('.emoji').forEach(emoji => emoji.classList.remove('selected'));
+        }
+
+        function handleFeedbackSubmit(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('feedback-title').value.trim();
+            const description = document.getElementById('feedback-description').value.trim();
+            const isAnonymous = document.getElementById('anonymous-feedback').checked;
+
+            // Validate required fields
+            if (!title) {
+                alert('Please enter a feedback title');
+                return;
+            }
+
+            // Determine rating type and value
+            let rating = null;
+            let type = null;
+            const selectedStar = document.querySelector('.star.selected');
+            const selectedEmoji = document.querySelector('.emoji.selected');
+
+            if (selectedStar) {
+                rating = parseInt(selectedStar.dataset.rating);
+                type = "star";
+            } else if (selectedEmoji) {
+                rating = parseInt(selectedEmoji.dataset.rating);
+                type = "emoji";
+            }
+
+            if (rating === null) {
+                alert('Please select a rating');
+                return;
+            }
+
+            // Show confirmation dialog
+            const confirmed = confirm('Are you sure you want to submit this feedback?');
+            if (!confirmed) {
+                return;
+            }
+
+            // Create feedback object
+            const feedback = {
+                id: Date.now(),
+                rating: rating,
+                type: type,
+                title: title,
+                description: description || null,
+                anonymous: isAnonymous,
+                submittedAt: new Date().toISOString()
+            };
+
+            // Save to localStorage
+            let feedbacks = JSON.parse(localStorage.getItem('feedbacks') || '[]');
+            feedbacks.push(feedback);
+            localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+
+            // Show success message
+            successMessage.style.display = 'block';
+
+            // Reset form
+            feedbackForm.reset();
+            clearRatingSelection();
+
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

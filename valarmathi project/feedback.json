@@ -1,0 +1,78 @@
+[
+  {
+    "id": 1,
+    "category": "star",
+    "rating": 5,
+    "feedbackText": "Great service!",
+    "anonymous": false,
+    "submittedAt": "2023-10-01T12:00:00Z"
+  },
+  {
+    "id": 2,
+    "category": "emoji",
+    "rating": 3,
+    "feedbackText": "Could be better.",
+    "anonymous": true,
+    "submittedAt": "2023-10-02T14:30:00Z"
+  },
+  {
+    "id": 1769870010569,
+    "category": "star",
+    "rating": 1,
+    "feedbackText": "the college was good",
+    "anonymous": true,
+    "submittedAt": "2026-01-31T20:03:30.569710"
+  },
+  {
+    "id": 1769917160445,
+    "category": "star",
+    "rating": 1,
+    "feedbackText": "the college facilities is very bad",
+    "anonymous": true,
+    "submittedAt": "2026-02-01T09:09:20.445074"
+  },
+  {
+    "id": 1770014923954,
+    "category": "star",
+    "rating": 1,
+    "feedbackText": "college is poor",
+    "anonymous": true,
+    "submittedAt": "2026-02-02T12:18:43.954602"
+  },
+  {
+    "id": 1770698565293,
+    "category": "star",
+    "rating": 1,
+    "feedbackText": "",
+    "anonymous": true,
+    "submittedAt": "2026-02-10T10:12:45.293404"
+  },
+  {
+    "id": 1770832256890,
+    "category": "star",
+    "rating": 1,
+    "feedbackText": "the college infrastructure is good",
+    "anonymous": true,
+    "submittedAt": "2026-02-11T23:20:56.890477"
+  },
+  {
+    "id": 1771568389972,
+    "category": "emoji",
+    "rating": 4,
+    "feedbackText": "",
+    "anonymous": false,
+    "submittedAt": "2026-02-20T11:49:49.972662",
+    "userEmail": "arun.kumar123@gmail.com",
+    "status": "pending"
+  },
+  {
+    "id": 1771569604545,
+    "category": "star",
+    "rating": 1,
+    "feedbackText": "the college grade is B",
+    "anonymous": false,
+    "submittedAt": "2026-02-20T12:10:04.545198",
+    "userEmail": "priya.ravi98@yahoo.com",
+    "status": "pending"
+  }
+]

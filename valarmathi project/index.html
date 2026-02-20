@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Issues & Feedback System - Submit Complaints, Track Status, Student Portal</title>
+    <meta name="description" content="Efficient college issues and feedback system for students to submit complaints, track status, and provide feedback. Admin dashboard for managing priority complaints, analytics, and student engagement.">
+    <meta name="keywords" content="college issues, student feedback, complaint system, admin dashboard, priority complaints, feedback analytics, student portal, college management, issue tracking, feedback platform">
+    <meta name="author" content="College Administration">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="theme-color" content="#667eea">
+    <link rel="canonical" href="https://college-feedback-system.com">
+    <link rel="icon" href="favicon.png" type="image/png">
+    <meta property="og:title" content="College Issues & Feedback System - Submit Complaints and Track Status">
+    <meta property="og:description" content="Comprehensive platform for students to submit college issues and feedback. Admin dashboard with priority management, analytics, and real-time tracking.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://college-feedback-system.com">
+    <meta property="og:site_name" content="College Issues & Feedback">
+    <meta property="og:image" content="https://college-feedback-system.com/favicon.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="College Issues & Feedback System">
+    <meta name="twitter:description" content="Efficient system for students to submit complaints and feedback with admin management and analytics.">
+    <meta name="twitter:image" content="https://college-feedback-system.com/favicon.png">
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "College Issues & Feedback System",
+        "description": "A comprehensive system for students to submit issues and feedback, with admin dashboard for management and analytics.",
+        "url": "https://college-feedback-system.com",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "College Administration"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Landing Page -->
+    <section id="landing" class="container">
+        <div class="box">
+            <h1>College Issues and Feedback</h1>
+            <button id="start-btn" class="start-button">Let's Start <span class="arrow">→</span></button>
+        </div>
+    </section>
+
+    <!-- Login Page -->
+    <section id="login" class="container hidden">
+        <div class="box login-box">
+            <h2>Login</h2>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="input-group">
+                    <label for="role">Role</label>
+                    <select id="role" required>
+                        <option value="">Select Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="student">Student</option>
+                    </select>
+                </div>
+                <button type="submit" class="login-button">Login</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Admin Dashboard -->
+    <section id="admin-dashboard" class="dashboard hidden">
+        <header class="dashboard-header">
+            <h2>Admin Dashboard</h2>
+            <div class="search-container">
+                <input type="text" id="admin-search" placeholder="Search complaints by title, description, or status..." class="search-input">
+                <input type="date" id="admin-date-filter" class="date-input">
+                <button id="admin-date-search-btn" class="search-btn">Search by Date</button>
+                <select id="admin-department-filter" class="department-filter">
+                    <option value="">All Departments</option>
+                    <option value="Arts">Arts</option>
+                    <option value="Science">Science</option>
+                    <option value="Commerce">Commerce</option>
+                    <option value="General">General</option>
+                </select>
+            </div>
+            <div class="notification-container">
+                <button id="notification-bell" class="notification-bell" onclick="showOldPendingNotifications()">🔔</button>
+                <span id="notification-count" class="notification-count" style="display:none;">0</span>
+            </div>
+            <button id="logout-admin" class="logout-btn">Logout</button>
+        </header>
+        <div class="summary-section">
+            <div class="summary-card total-card">
+                <h3>Total Complaints</h3>
+                <div class="count" id="total-count">0</div>
+            </div>
+            <div class="summary-card pending-card">
+                <h3>Pending Complaints</h3>
+                <div class="count" id="pending-count">0</div>
+            </div>
+            <div class="summary-card resolved-card">
+                <h3>Resolved Complaints</h3>
+                <div class="count" id="resolved-count">0</div>
+            </div>
+            <div class="summary-card feedback-card">
+                <h3>Total Feedbacks</h3>
+                <div class="count" id="total-feedback-count">0</div>
+            </div>
+        </div>
+        <div class="dashboard-content">
+            <div class="section-card" id="high-priority">
+                <h3>High Priority Complaints</h3>
+                <div class="items">
+                    <!-- Dynamic content loaded here -->
+                </div>
+            </div>
+            <div class="section-card" id="medium-priority">
+                <h3>Medium Priority Complaints</h3>
+                <div class="items">
+                    <!-- Dynamic content loaded here -->
+                </div>
+            </div>
+            <div class="section-card" id="low-priority">
+                <h3>Low Priority Complaints</h3>
+                <div class="items">
+                    <!-- Dynamic content loaded here -->
+                </div>
+            </div>
+            <div class="feedback-row">
+                <div class="section-card" id="feedback">
+                    <h3>Feedback (<span id="feedback-count">0</span>)</h3>
+                    <div class="items">
+                        <!-- Dynamic content loaded here -->
+                    </div>
+                </div>
+                <div class="visualization-container">
+                    <div class="chart-area">
+                        <svg width="550" height="550" viewBox="0 0 400 400" id="summary-chart">
+                            <!-- Combined pie chart will be inserted here -->
+                        </svg>
+                        <div id="chart-legend"></div>
+                    </div>
+                    <div id="count-summary"></div>
+                </div>
+            </div>
+        </div>
+        <div class="history-section">
+            <div class="history-box complaints-history">
+                <h3>Complaints History</h3>
+                <div class="history-list" id="complaints-history-list">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+            <div class="history-box feedback-history">
+                <h3>Feedback History</h3>
+                <div class="history-list" id="feedback-history-list">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Dashboard -->
+    <section id="student-dashboard" class="dashboard hidden">
+        <header class="dashboard-header">
+            <h2>Student Dashboard</h2>
+            <button id="logout-student" class="logout-btn">Logout</button>
+        </header>
+        <!-- Duplicate Notification -->
+        <div id="duplicate-notification" class="notification hidden">
+            <p>This complaint already exists.</p>
+            <button id="dismiss-notification" class="dismiss-btn">Dismiss</button>
+        </div>
+        <div class="dashboard-content">
+            <div class="section-card" id="submit-complaint">
+                <h3>Submit Complaint</h3>
+                <div class="form-container hidden">
+                    <form id="complaint-form">
+                        <div class="input-group">
+                            <label for="complaint-title">Complaint Title</label>
+                            <input type="text" id="complaint-title" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="complaint-description">Description</label>
+                            <textarea id="complaint-description" rows="4" required></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label for="complaint-priority">Priority</label>
+                            <select id="complaint-priority" required>
+                                <option value="">Select Priority</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="complaint-department">Department (Optional)</label>
+                            <select id="complaint-department">
+                                <option value="">Select Department</option>
+                                <option value="Arts">Arts</option>
+                                <option value="Science">Science</option>
+                                <option value="Commerce">Commerce</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="anonymous-complaint"> Submit complaint anonymously
+                            </label>
+                        </div>
+                        <button type="submit" class="submit-btn">Submit Complaint</button>
+                    </form>
+                    <div id="complaints-list" class="submitted-list hidden">
+                        <h4>Submitted Complaints</h4>
+                        <ul id="complaints-ul"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="section-card" id="give-feedback">
+                <h3>Give Feedback</h3>
+                <div class="form-container hidden">
+                    <form id="feedback-form">
+                        <div class="input-group">
+                            <label for="feedback-title">Feedback Title</label>
+                            <input type="text" id="feedback-title">
+                        </div>
+                        <div class="input-group">
+                            <label for="feedback-description">Feedback Description</label>
+                            <textarea id="feedback-description" rows="4"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label>Rating</label>
+                            <div class="rating-section">
+                                <div class="rating-stars" id="rating-stars">
+                                    <span class="star" data-rating="1">☆</span>
+                                    <span class="star" data-rating="2">☆</span>
+                                    <span class="star" data-rating="3">☆</span>
+                                    <span class="star" data-rating="4">☆</span>
+                                    <span class="star" data-rating="5">☆</span>
+                                </div>
+                                <div class="rating-emojis" id="rating-emojis">
+                                    <span class="emoji" data-rating="1">😡</span>
+                                    <span class="emoji" data-rating="2">😞</span>
+                                    <span class="emoji" data-rating="3">😐</span>
+                                    <span class="emoji" data-rating="4">😊</span>
+                                    <span class="emoji" data-rating="5">😍</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="anonymous-feedback"> Submit anonymously
+                            </label>
+                        </div>
+                        <button type="submit" class="submit-btn">Submit Feedback</button>
+                    </form>
+                    <div id="feedback-list" class="submitted-list hidden">
+                        <h4>Submitted Feedback</h4>
+                        <ul id="feedback-ul"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="section-card" id="view-status">
+                <h3>View Complaint Status</h3>
+                <div id="status-list" class="submitted-list">
+                    <h4>Your Complaints</h4>
+                    <ul id="status-ul"></ul>
+                    <p id="no-complaints" class="no-data">No complaints submitted yet.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
